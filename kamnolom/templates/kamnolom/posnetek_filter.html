@@ -1,0 +1,54 @@
+{% extends "search.html" %}
+
+{% load static %}
+{% load staticfiles %}
+{% load url_tags %} 
+{% load admin_list %}
+
+{% load i18n admin_modify %}
+
+{% block content %}
+     
+     {% block form %}
+     {{ block.super }}
+     {% endblock %}
+
+    <br class="clear" />
+
+    <h1>Zadnji posnetki</h1>
+
+    <br class="clear" />
+    
+    <div class="module aligned">
+        
+         {% for obj in page_obj.object_list %}
+               
+         <div class="form-row field-id">
+                    <a href="{% url 'posnetek-detail' pk=obj.id %}"><h1>{{ obj.naslov }}</h1></a>
+                    
+                    <div class="" for="id_id" style="padding: 0 2% 0 0; float: left; width: 20%;">
+                    
+                            <img src="{{ obj.oddaja.slika.url }}" width="100%" />
+                            <h3> {{ object.datum|date }}</h3>
+                             
+                            <p> {{ object.dolzina }}</p>
+                            
+                            <p>
+                                <a href="{{ object.povezava_4d }}">
+                                    Ogled na 
+                                    <img src="http://img.rtvslo.si/_static/r1/rtv4d/app/img/ico_rtv4d.ico" width="50px" />
+                                </a>
+                            </p>
+                    
+                    </div>
+                    
+                    <div class="related-widget-wrapper" style="width: 78%;">
+                         {{ obj.oddaja.opis }}
+                    </div> 
+         </div>  
+         
+         {% endfor %}
+                                     
+    </div>
+
+{% endblock %}

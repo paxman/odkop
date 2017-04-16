@@ -1,0 +1,51 @@
+{% load static %}
+
+<html>
+
+<head>
+
+<title>Odkop</title> 
+
+{% block extra_head %} 
+
+<link rel="stylesheet" type="text/css" href="{% static "/admin/css/base.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "/admin/css/forms.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "/admin/css/login.css" %}">
+<link rel="stylesheet" type="text/css" href="{% static "/admin/css/widgets.css" %}">
+
+<script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+<script src="{% static "/admin/js/vendor/jquery/jquery.min.js" %}"></script>
+<script type="text/javascript" src="{% static "/admin/js/jquery.init.js" %}"></script>
+
+<script type="text/javascript" src="{% static "/admin/js/core.js" %}"></script>
+<script type="text/javascript" src="{% static "/admin/js/SelectFilter2.js" %}"></script>
+<script type="text/javascript" src="{% static "/admin/js/admin/RelatedObjectLookups.js" %}"></script>
+<script type="text/javascript" src="{% static "/admin/js/actions.js" %}"></script>
+
+
+{% endblock %} 
+</head>
+
+	<body>
+	    
+	    {% block container %}
+	    
+		    <div id="container">
+		         
+		         <div id="content" class="{% block coltype %}colSM{% endblock %}" style="margin-left: auto; margin-right: auto; width: 800px;">
+		
+			         <h1><a href="{% url 'domov' %}"> <img src="{% get_media_prefix %}slike/odkop.png" style="padding-right:10px;"/>Odkop</a></h1>
+			            
+		            <hr />
+		            
+		            <br class="clear"/>
+			        
+			        {% block content %}
+			        {% endblock %}
+		        
+		    </div>
+	    
+	    {% endblock %}
+	    
+	</body>
+</html>

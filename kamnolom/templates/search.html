@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load staticfiles %}
+{% load admin_list %}
+
+{% load i18n admin_modify %}
+
+{% block extra_head %} 
+    {{ block.super }} 
+    
+    <style>
+        
+        blockquote.vsebina span { background:lightblue;};
+        
+    
+    </style>
+    
+{% endblock %}
+
+{% block content %}
+    
+    {% block form %}
+	    <form action="" method="get">
+	    
+	        {{ filter.form.media}} 
+	        
+	        {% for field in filter.form %}
+	            
+	            
+	            <div class="fieldWrapper">
+	                {{ field.errors }}
+	               
+	                <div class="div_label" style="float: left; width: 200px;">
+	                    {{ field.label_tag }}
+	                </div>
+	
+	                <div class="div_field" style="float: left; display: block;">
+	                    {{ field }}
+	                </div>
+	
+	            </div>
+	            
+	            <br class="clear" /> 
+	            
+	        {% endfor %} 
+	        
+	        <input type="submit" value="Išči">
+	
+	    </form>
+    
+    {% endblock %}
+    
+    <br class="clear" />
+
+    <h1>Zadnji posnetki</h1>
+
+    <br class="clear" />
+    
+    {% block results %}
+    
+    <div class="module aligned">
+        
+        {% block results_list %}
+	        
+        {% endblock %}
+                                             
+    </div>
+    {% endblock %}
+    
+{% endblock %}

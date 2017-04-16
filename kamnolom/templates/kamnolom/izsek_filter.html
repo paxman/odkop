@@ -1,0 +1,74 @@
+{% extends "search.html" %}
+
+{% load static %}
+{% load staticfiles %}
+{% load admin_list %}
+
+{% load i18n admin_modify %}
+
+{% block content %}
+            
+    {% block form %}
+     {{ block.super }}
+    {% endblock %}
+
+    <br class="clear" />
+
+    <h1>Najdeni izseki</h1>
+
+    {% include "pager.html" %}
+
+    <br class="clear" />
+
+    <div class="module aligned">
+        
+         {% for obj in page_obj.object_list %}
+               
+         <div class="form-row field-id">
+                    <a href="{% url 'posnetek-detail' pk=obj.posnetek.id cas=obj.zacetek|time:"H:i:s" %}"><h1 style="font-size: 200%">{{ obj.posnetek.naslov }} / {{ obj.posnetek.oddaja.ime }}</h1></a>
+                     
+                    <div class="" for="id_id" style="padding: 0 2% 0 0; float: left; width: 20%;">
+                             
+                            <div>
+                                 <p>
+                                    <a href="{% url 'posnetek-detail' pk=obj.posnetek.id cas=obj.zacetek|time:"H:i:s" %}" class="">
+                                         <img title="Predvajaj" src="{% get_media_prefix %}slike/play.png" width="auto" /> 
+                                    </a>
+                                </p>
+                                <br class="clear" />
+                                <p>  
+                                    {{ obj.posnetek.datum|date }} 
+                                    
+                                </p>
+                                <p>  
+                                    {{ obj.zacetek|time:"H:i:s" }} / {{ obj.posnetek.dolzina|time:"H:i:s" }}
+                                    
+                                </p>
+                            </div>
+                    
+                    </div>
+                    
+                    <div class="related-widget-wrapper" style="width: 78%">
+                        <blockquote class="vsebina" style="font-size: 150%;margin-bottom:0;margin-top:0;">
+                        
+                        {% autoescape on %}
+                            {{ obj.snippet|safe }}
+                        {% endautoescape %} 
+
+                        </blockquote>
+                          
+                                    <a href="{% url 'posnetek-detail' pk=obj.posnetek.id cas=obj.zacetek|time:"H:i:s" %}#{{ obj.id }}" style="font-size: 150%;float:right;">
+                                        <img title="Preberi" src="{% get_media_prefix %}slike/read_more_xsmall.png" width="auto" style="margin-right:40px;" /> 
+                                    </a>
+                        
+                          
+                    </div>
+         </div>  
+         
+         {% endfor %}
+                                     
+    </div>
+
+    {% include "pager.html" %}
+
+{% endblock %}

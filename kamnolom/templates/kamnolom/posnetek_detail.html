@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load staticfiles %}
+{% load admin_list %}
+
+{% load i18n admin_modify %}
+
+{% block extra_head %} 
+	{{ block.super }} 
+	<script type="text/javascript" src="http://img.rtvslo.si/_static/r518/rtv4d/jw7/versions/jwplayer-head/jwplayer4d.js"></script>
+	<script type="text/javascript" src="http://img.rtvslo.si/_static/r518/rtv4d/jw7/jquery.play.jw7.js"></script>
+	
+	<script type="text/javascript">
+        jQuery( document ).ready(function() { 
+                        
+        jQuery("div#arhivplayer").playVod({{ object.id }}, {
+                client: "82013fb3a531d5414f478747c1aca622",
+                disableAds: true,
+                autostart:  {% if cas %}true{% else %}false{% endif %},
+                width: "78%",
+                height: "auto",
+                clip: {
+                    start: {% if cas %}"{{ cas }}"{% else %}"00:00:00"{% endif %},
+                    end: "99:99:99"
+                },
+                callback: function(data) {
+                   
+
+                }
+        });       
+  
+                            
+        jQuery('a.play_vid').click(function() {
+               
+            cas = $(this).attr('time-val')
+             
+            jQuery("div#arhivplayer").playVod(174459389, {
+                    client: "82013fb3a531d5414f478747c1aca622",
+                    disableAds: true,
+                    autostart: true,
+                    width: "78%",
+                    height: "auto",
+                    clip: {
+                        start: cas,
+                        end: "99:99:99"
+                    },
+                    callback: function(data) {
+                       
+
+                    }
+            });
+            
+            jQuery('html, body').animate({
+                scrollTop: $("div#arhivplayer").offset().top
+                }, 2000);                    
+         
+        }); 
+         
+        jQuery('div.izsek').hover( function() {
+                    $(this).find('a.play_vid').css('visibility', 'visible');
+				  }, function() {
+				  
+					 $(this).find('a.play_vid').css('visibility', 'hidden');
+				  }
+			);
+				     
+        });
+    </script>
+{% endblock %} 
+
+{% block content %}
+            
+    <h1 id="naslov">{{ object.naslov }}</h1>
+    
+    <hr />
+    
+     <div class="module aligned ">
+         <div class="form-row field-id">
+        
+                    <div class="" for="id_id" style="padding: 0 2% 0 0; float: left; width: 20%;">
+                            <img src="{{ object.oddaja.slika.url }}" width="100%" />
+                            <h3> {{ object.datum|date }}</h3>
+                             
+                            <p> {{ object.dolzina }}</p>
+                            
+                            <p>
+                                <a href="{{ object.povezava_4d }}">
+                                    Ogled na 
+                                    <img src="http://img.rtvslo.si/_static/r1/rtv4d/app/img/ico_rtv4d.ico" width="50px" />
+                                </a>
+                            </p>
+                            
+                            <p>
+                                <a href="{{ object.podnapisi.url }}">Dolpoteg transkripta</a>
+                            </a>
+                            </p>
+                    
+                    </div>
+                    
+                    <div class="related-widget-wrapper" id="arhivplayer" style="width: 78%;">
+                         
+                    </div> 
+         </div>                              
+    </div>
+    
+    <div class="module aligned ">
+        {% for obj in object.izsek_set.all %}
+        
+         <div class="form-row izsek" id="{{ obj.id }}">
+                
+                    <div class="play_button" for="id_id" style="padding: 0 2% 0 0;float: left;width: 20%;">
+                        <a href="#" class="play_vid" time-val="{{ obj.zacetek|time:"H:i:s" }}" style="visibility:hidden;">
+                            <img src="{% get_media_prefix %}slike/play.png" width="auto" /> 
+                        </a>
+                       
+                    </div>
+                    
+                    <div class="related-widget-wrapper" style="width:78%;font-size: 100%; ">
+                       <blockquote class="vsebina" style="font-size: 150%; margin-top:0;margin-left:0;"> {{ obj.vsebina }}</blockquote> 
+                    </div>
+                    <br class="clear" />
+                    <div class="" for="id_id" style="float: right;">
+                       
+                        <a href="#naslov" style="font-size: 150%;">
+                            Na vrh 
+                        </a>
+                        
+                    </div>
+    
+        </div>
+            
+         {% endfor %}             
+            
+    </div>
+{% endblock %}

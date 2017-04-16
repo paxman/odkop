@@ -1,0 +1,18 @@
+{% load url_tags %} 
+
+<div class="pagination">
+    
+        <span class="step-links"> 
+        
+            {% if page_obj.has_previous %} 
+                <a href="?{% url_replace page=page_obj.previous_page_number %}">< Prejšnja</a> 
+            {% endif %} 
+                
+                <span class="current"> Stran {{ page_obj.number }} od {{ page_obj.paginator.num_pages }}. </span> 
+            
+            {% if page_obj.has_next %} 
+                <a href="?{% url_replace page=page_obj.next_page_number %}">Naslednja ></a> 
+            {% endif %}
+        
+        </span>
+    </div>
